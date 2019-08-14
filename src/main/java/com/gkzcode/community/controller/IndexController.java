@@ -12,7 +12,7 @@ import org.springframework.stereotype.Controller;
  * @Version 1.0
  **/
 @Controller
-public class HelloController {
+public class IndexController {
 
     @GetMapping("/")
     public String hello(@RequestParam(name="name",required = false,defaultValue = "world")String name, Model model){
