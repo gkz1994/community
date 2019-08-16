@@ -1,5 +1,31 @@
 # gkzcode community
 
+##技术选型
+
+Spring Boot
+
+Spring MVC
+
+MyBatis
+
+MySql,H2
+
+Flyway
+
+Heroku
+
+git/github
+
+maven
+
+restful
+
+bootstrap
+
+Thymeleaf
+
+uml关系图
+
 ##资料
 
 [Spring 文档](https://spring.io/guides)
@@ -13,6 +39,8 @@
 [Bootstrap](https://v3.bootstrap.com/getting-started/)
 
 [Github OAuth](https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/)
+
+[Spring](https://docs.spring.io/spring-boot/docs/2.0.0.RC1/reference/htmlsingle/#boot-features-embedded-database-support)
 
 ##工具
 

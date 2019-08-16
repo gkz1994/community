@@ -1,19 +1,17 @@
 package com.gkzcode.community.controller;
 
+import com.gkzcode.community.mapper.UserMapper;
 import com.gkzcode.community.dto.AccessTokenDto;
 import com.gkzcode.community.dto.GithubUserDto;
+import com.gkzcode.community.model.User;
 import com.gkzcode.community.provider.GithubProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
+import java.util.UUID;
 
 /**
  * @ClassName OauthorizeController
@@ -27,6 +25,9 @@ public class AuthorizeController {
 
     @Autowired
     private GithubProvider githubProvider;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Value("${github.client.id}")
     private String clientid;
@@ -46,10 +47,19 @@ public class AuthorizeController {
         accessToken.setRedirect_uri(redirecturi);
         accessToken.setClient_secret(clientsecret);
         String token=githubProvider.getToken(accessToken);
-        GithubUserDto user=githubProvider.getUser(token);
-        System.out.println(user);
-        return "index";
+        GithubUserDto githubUserDto=githubProvider.getUser(token);
+        if(githubUserDto!=null){
+            User user=new User();
+            user.setName(githubUserDto.getName());
+            user.setToken(UUID.randomUUID().toString());
+            user.setAccountId(String.valueOf(githubUserDto.getId()));
+            user.setGmtCreate(System.currentTimeMillis());
+            user.setGmtModified(user.getGmtCreate());
+            userMapper.insert(user);
+            request.getSession().setAttribute("user",githubUserDto);
+            return "redirect:/";
+        }else{
+            return "redirect:/";
+        }
     }
-
-
 }
