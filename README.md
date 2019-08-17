@@ -47,3 +47,47 @@ uml关系图
 [Git](https://git-scm.com/download)
 
 [Visual Paradigm](https://www.visual-paradigm.com)
+
+[FlyWay](https://flywaydb.org/getstarted/firststeps/maven)
+
+[lombok](https://www.projectlombok.org/features/all)
+
+##脚本
+
+```sql
+create table user
+(
+	id int auto_increment,
+	account_id varchar(100),
+	name varchar(50),
+	token char(36),
+	gmt_create bigint,
+	gmt_modified bigint,
+	constraint user_pk
+		primary key (id)
+);
+
+create table question
+(
+	id int auto_increment,
+	title varchar(50),
+	description text,
+	gmt_create bigint,
+	gmt_modified bigint,
+	creator int,
+	comment_count int default 0,
+	view_count int default 0,
+	like_count int default 0,
+	tag varchar(256),
+	constraint question_pk
+		primary key (id)
+);
+
+
+
+```
+
+```
+bash
+mvn flyway:migrate
+```
